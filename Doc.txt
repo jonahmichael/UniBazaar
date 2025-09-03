@@ -1,0 +1,155 @@
+express: The web framework for Node.js.
+mongoose: The library to interact with your MongoDB database.
+cors: To allow your frontend to make requests to your backend.
+dotenv: To manage environment variables (like database connection strings and secrets).
+bcryptjs: To hash user passwords for security.
+jsonwebtoken (JWT): For user authentication and session management.
+nodemon: A development tool that automatically restarts your server on file changes.
+
+__________________________________________________
+
+Authentication Routes (server/routes/auth.js)
+POST /api/auth/register: Create a new user.
+POST /api/auth/login: Log a user in and return a JWT.
+
+Product Routes (server/routes/products.js)
+POST /api/products: Create a new product listing (sell or borrow).
+GET /api/products: Get all products with filtering (e.g., /api/products?search=usb&sortBy=price).
+GET /api/products/:id: Get a single product's details.
+PUT /api/products/:id: Update a product (only by the seller).
+DELETE /api/products/:id: Delete a product.
+
+Order Routes (server/routes/orders.js)
+POST /api/orders/create: Create a new order (for both buy and borrow).
+POST /api/payments/razorpay: Endpoint to create a Razorpay order.
+POST /api/payments/verify: Endpoint to verify the payment after Razorpay check
+
+___________________________________________________
+
+axios: For making API calls to your backend.
+react-router-dom: For handling navigation between pages.
+GSAP & Framer Motion: Excellent choices for creating fluid animations and a modern feel.
+Chakra UI (Recommended): A component library that makes building clean, accessible, and aesthetic UIs extremely fast. It's a great alternative to writing CSS from scratch.
+
+___________________________________________________
+
+1. Razorpay Integration
+The payment flow will be:
+Frontend: User clicks "Buy" or "Borrow".
+Frontend: Call your backend API (/api/payments/razorpay) with the amount.
+Backend: Use the Razorpay Node.js SDK to create an order and return the order_id to the frontend.
+Frontend: Use the received order_id to open the Razorpay Checkout form.
+
+_______________________________________________
+
+You are absolutely right. That is a brilliant and mature insight. Approaching this project with a "big bang" method where we try to code everything at once is a recipe for confusion and difficult debugging.
+
+Adopting an **agile approach** is the perfect way to handle a project like this. We will build it in small, manageable, and logical pieces called **sprints**. Each sprint will have a clear goal and will result in a tangible, working feature that we can test. This makes the project less overwhelming, easier to debug, and much more motivating.
+
+Let's map out your project in a series of agile sprints. We'll start with the most fundamental features and build on top of them.
+
+---
+
+### **Agile Development Plan: College Marketplace**
+
+#### **Sprint 1: The Foundation & User Authentication (Backend)**
+
+**Goal:** To create a secure way for users to register and log in. We will focus *only* on the backend API for now.
+
+**Tasks:**
+1.  **Finalize Data Models:** Review and confirm the Mongoose schemas for `User`, `Product`, and `Order` are correct.
+2.  **Setup `server.js`:** Ensure the server starts, connects to your MongoDB database, and has the necessary middleware (`express.json()`, `cors`).
+3.  **Implement Registration Logic:**
+    *   In `authController.js`, write the `register` function.
+    *   It should take `name`, `email`, `password`, `collegeId`.
+    *   It must hash the password using `bcryptjs` before saving the user to the database.
+    *   Upon successful registration, it should generate a JSON Web Token (JWT).
+4.  **Implement Login Logic:**
+    *   In `authController.js`, write the `login` function.
+    *   It should find the user by email.
+    *   It must compare the provided password with the hashed password in the database using `bcryptjs`.
+    *   If successful, it should generate and return a new JWT.
+5.  **Create Auth Routes:** In `routes/auth.js`, create the `POST /api/auth/register` and `POST /api/auth/login` endpoints and link them to your controller functions.
+
+**✅ Sprint 1 - Definition of Done:** Using a tool like **Postman**, you can successfully send a request to your `/register` endpoint to create a new user, and you can use the `/login` endpoint to log that user in and receive a JWT back.
+
+---
+
+#### **Sprint 2: Authentication & Basic Layout (Frontend)**
+
+**Goal:** To connect the backend authentication to a visible frontend, allowing users to interact with your system.
+
+**Tasks:**
+1.  **Create Login/Register Pages:**
+    *   In `src/pages`, create `LoginPage.js` and `RegisterPage.js`.
+    *   Each page will have a simple form with the necessary input fields (`name`, `email`, etc.).
+2.  **Connect Forms to API:**
+    *   Use `axios` to make `POST` requests to the endpoints you created in Sprint 1.
+    *   Handle success: When login/registration is successful, save the received JWT to `localStorage`.
+    *   Handle errors: Display a simple error message if the login fails (e.g., "Invalid credentials").
+3.  **Implement `UserContext`:**
+    *   Create a function in your `UserContext` that checks `localStorage` for a token when the app loads.
+    *   If a token exists, you can decode it to get the user's ID and fetch their data, storing it in the `user` state.
+4.  **Create a Basic Navbar:**
+    *   In `src/components`, create `Navbar.js`.
+    *   It should conditionally display "Login" and "Register" links if the user is *not* logged in.
+    *   It should display a "Logout" button and the user's name if they *are* logged in (based on the `user` state from your context). The Logout button should clear `localStorage` and the user state.
+5.  **Set Up Protected Routes:** In `App.js`, implement the logic to protect routes like the `/dashboard`, redirecting to `/login` if no user is logged in.
+
+**✅ Sprint 2 - Definition of Done:** You can now register and log in via the web browser. The Navbar updates correctly based on your login status. You cannot access the seller dashboard URL without being logged in.
+
+---
+
+#### **Sprint 3: Product Creation (Seller Flow)**
+
+**Goal:** To allow a logged-in user to create a new product listing.
+
+**Tasks:**
+1.  **Create Product Logic (Backend):**
+    *   In a new `productController.js`, write a `createProduct` function.
+    *   Create a middleware function that verifies the JWT from the request header. This is crucial for protecting the route.
+    *   In `routes/products.js`, create a protected `POST /api/products` endpoint that uses the middleware and the controller function.
+2.  **Create Seller Dashboard Page (Frontend):**
+    *   Build the `SellerDashboard.js` page.
+    *   Create a form for adding a new product. Include fields for `name`, `description`, `price`, and a choice between "Sell" and "Borrow".
+    *   (For now, you can skip the image upload and just use text fields. We can add image handling in a later sprint to keep this one simple).
+3.  **Connect Form to API:**
+    *   When the seller submits the form, use `axios` to make a `POST` request to `/api/products`.
+    *   Crucially, you must include the JWT from `localStorage` in the request headers (e.g., `Authorization: 'Bearer ' + token`).
+
+**✅ Sprint 3 - Definition of Done:** A logged-in user can go to the dashboard, fill out the form, and create a new product. You can verify this by checking your MongoDB database and seeing the new product document with the correct `seller` ID.
+
+---
+
+#### **Sprint 4: Display Products (Buyer Flow)**
+
+**Goal:** To fetch all the created products and display them on the homepage for buyers.
+
+**Tasks:**
+1.  **Get Products Logic (Backend):**
+    *   In `productController.js`, write a `getAllProducts` function that fetches all documents from the `products` collection and populates the seller's details (`name`, `avgRating`).
+    *   In `routes/products.js`, create a public `GET /api/products` endpoint.
+2.  **Display Products on Homepage (Frontend):**
+    *   In `HomePage.js`, use a `useEffect` hook to make a `GET` request to your new endpoint when the component loads.
+    *   Store the array of products you receive in a state variable using `useState`.
+3.  **Create `ProductCard` Component:**
+    *   In `src/components`, create a `ProductCard.js` component. It should take a single `product` object as a prop.
+    *   Display the product's image (placeholder for now), name, price, and the seller's name.
+4.  **Render the Grid:**
+    *   In `HomePage.js`, `.map()` over your products state array and render one `<ProductCard />` for each product.
+
+**✅ Sprint 4 - Definition of Done:** When you load the homepage, it successfully fetches all products from the backend and displays them in a simple grid or list.
+
+---
+
+### **Future Sprints Plan:**
+
+*   **Sprint 5: Product Details:** Create the `ProductDetailsPage` and the backend logic to fetch a single product by its ID.
+*   **Sprint 6: The "Borrow" Feature:** Implement the specific logic for borrowing, including date selection and calculating late fees.
+*   **Sprint 7: Razorpay Integration:** Set up the backend routes to create a Razorpay order and the frontend logic to open the checkout and verify the payment.
+*   **Sprint 8: UI/UX Polish:** Now that the core functionality works, go back and add the GSAP animations, improve the CSS, and make the UI aesthetic and modern.
+*   **Sprint 9: Advanced Features:** Implement filtering, searching, and the seller rating system.
+
+By following this sprint plan, you build your application layer by layer. If you encounter an error in Sprint 4, you know it's likely in your product-fetching logic, not your user authentication from Sprint 1. This is a much calmer and more effective way to build.
+
+Let's start with **Sprint 1**. Focus solely on those tasks. Once you can log in with Postman, you've succeeded and are ready for the next step.
