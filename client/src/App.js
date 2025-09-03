@@ -1,27 +1,33 @@
-import React from 'react';
+import React, { useContext } from 'react'; // <-- Import useContext
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css'; 
 
-// Import the new Navbar component
-import Navbar from './components/Navbar';
+// Import the UserContext to check the current role
+import { UserContext } from './context/UserContext'; 
 
-// Import Pages
+import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import SellerDashboard from './pages/SellerDashboard'; // <-- Import the new page
 
 function App() {
+  const { user, role } = useContext(UserContext); // <-- Get the user and role
+
   return (
     <Router>
-      {/* Replace the old nav with our new Navbar component */}
       <Navbar />
       
       <main>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          {/* If the user is a seller, the homepage route leads to the dashboard */}
+          <Route path="/" element={user && role === 'seller' ? <SellerDashboard /> : <HomePage />} />
+          
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          {/* We will add the SellerDashboard route soon */}
+
+          {/* Add a direct route to the dashboard for sellers */}
+          <Route path="/dashboard" element={user && role === 'seller' ? <SellerDashboard /> : <HomePage />} />
         </Routes>
       </main>
     </Router>

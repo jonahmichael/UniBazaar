@@ -26,3 +26,17 @@ exports.createProduct = async (req, res) => {
         res.status(500).send('Server Error');
     }
 };
+
+// @desc    Get all product listings
+// @route   GET /api/products
+// @access  Public
+exports.getAllProducts = async (req, res) => {
+    try {
+        // Find all products and sort them by the newest first
+        const products = await Product.find().sort({ createdAt: -1 });
+        res.json(products);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+};

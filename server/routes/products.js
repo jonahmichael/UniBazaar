@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const authMiddleware = require('../middleware/authMiddleware'); // Import the middleware
-const { createProduct } = require('../controllers/productController');
+const authMiddleware = require('../middleware/authMiddleware');
 
-// @route   POST /api/products
-// @desc    Create a new product listing
-// @access  Private
+// This is the single, corrected line that imports BOTH functions.
+const { createProduct, getAllProducts } = require('../controllers/productController');
+
+// ROUTE 1: Create a new product
 router.post('/', authMiddleware, createProduct);
-// Notice how we put `authMiddleware` right before `createProduct`.
-// This tells Express to run our middleware first. If the token is invalid,
-// createProduct will never even be called.
+
+// ROUTE 2: Get all products
+router.get('/', getAllProducts);
 
 module.exports = router;
