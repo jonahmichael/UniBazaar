@@ -11,6 +11,8 @@ app.use(cors());
 // To parse incoming JSON request bodies
 app.use(express.json());
 
+// In server/server.js, add this line with your other routes
+app.use('/api/products', require('./routes/products'));
 // --- Database Connection ---
 const connectDB = async () => {
     try {

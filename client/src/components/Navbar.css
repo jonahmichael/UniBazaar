@@ -1,0 +1,174 @@
+/* Styling for the Main Navbar Container */
+.navbar-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 2.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1600px; /* Wider for a modern feel */
+    margin: 0 auto;
+}
+
+/* Logo and Left Section */
+.navbar-left .navbar-logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    text-decoration: none;
+}
+
+/* Search Bar in the Center */
+.navbar-center {
+    flex-grow: 1;
+    margin: 0 2rem;
+    max-width: 600px;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background-color: var(--background-light);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.search-bar:focus {
+    outline: none;
+    border-color: var(--primary-olive);
+    box-shadow: 0 0 0 2px rgba(85, 107, 47, 0.2);
+}
+
+/* Links and Actions on the Right */
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.nav-link {
+    color: var(--text-dark);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: var(--primary-olive);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-account {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 0.9rem;
+}
+
+.nav-link-small {
+    font-size: 0.8rem;
+    color: var(--secondary-olive);
+    text-decoration: none;
+}
+
+
+/* -- Buyer/Seller Toggle Switch -- */
+.role-switch-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--background-light);
+    padding: 0.3rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.role-switch-container span {
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.2rem 0.5rem;
+    border-radius: 15px;
+    color: var(--secondary-olive);
+    transition: all 0.3s ease;
+}
+
+.role-switch-container span.active {
+    background-color: var(--primary-olive);
+    color: #fff;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: var(--primary-olive);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--primary-olive);
+}
+
+input:checked + .slider:before {
+  transform: translateX(14px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
