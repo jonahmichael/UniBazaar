@@ -1,0 +1,78 @@
+.details-container {
+    max-width: 1200px;
+    margin: 3rem auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    padding: 0 2rem;
+}
+
+.details-image-section .main-product-image {
+    width: 100%;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+}
+
+.details-info-section .product-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+}
+
+.details-info-section .product-category-detail {
+    font-size: 1rem;
+    color: var(--secondary-olive);
+    margin-bottom: 1.5rem;
+}
+
+.details-info-section .product-price-detail {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-olive);
+    margin-bottom: 2rem;
+}
+
+.details-info-section .section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 2rem 0 1rem 0;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.details-info-section .product-description {
+    line-height: 1.6;
+}
+
+.action-buttons {
+    margin-top: 2.5rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.btn {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-olive);
+    color: #fff;
+}
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.btn-secondary {
+    background-color: var(--background-light);
+    color: var(--text-dark);
+    border: 1px solid var(--border-color);
+}
+.btn-secondary:hover {
+    background-color: var(--border-color);
+}

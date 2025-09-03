@@ -56,3 +56,8 @@
     color: var(--primary-olive);
     margin-top: auto; /* Pushes the price to the bottom */
 }
+
+/* Add this to the bottom of ProductCard.css */
+.product-card-link {
+    text-decoration: none; /* Removes the underline from the link */
+}
