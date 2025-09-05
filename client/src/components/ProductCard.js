@@ -8,7 +8,11 @@ const ProductCard = ({ product }) => {
         <Link to={`/product/${product._id}`} className="product-card-link">
             <div className="product-card">
                 <div className="product-image-container">
-                    <img src="https://via.placeholder.com/300x200" alt={product.name} className="product-image" />
+                            <img 
+            src={product.images && product.images.length > 0 ? product.images[0] : "https://via.placeholder.com/300x200"} 
+            alt={product.name} 
+            className="product-image" 
+        />
                 </div>
                 <div className="product-info">
                     <h3 className="product-name">{product.name}</h3>

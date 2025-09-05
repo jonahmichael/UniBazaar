@@ -72,7 +72,7 @@ const ProductDetailsPage = () => {
     return (
         <div className="details-container">
             <div className="details-image-section">
-                <img src="https://via.placeholder.com/600x400" alt={product.name} className="main-product-image" />
+                <img src={product.images[0]} alt={product.name} />
             </div>
             <div className="details-info-section">
                 <h1 className="product-title">{product.name}</h1>

@@ -2,8 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config(); // This loads the .env file
-
+const cloudinaryConnect = require('./config/cloudinaryConfig'); // <-- 1. Import
 const app = express();
+cloudinaryConnect();
 
 // --- Middleware ---
 // Enable Cross-Origin Resource Sharing
@@ -14,6 +15,8 @@ app.use(express.json());
 // In server/server.js, add this line with your other routes
 app.use('/api/products', require('./routes/products'));
 app.use('/api/orders', require('./routes/orders')); 
+app.use('/api/upload', require('./routes/uploadRoutes')); // <-- ADD THIS LINE
+
 
 // --- Database Connection ---
 const connectDB = async () => {

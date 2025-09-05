@@ -1,0 +1,131 @@
+/* === GLOBAL LAYOUT & NAVIGATION (from Sprint 2) === */
+nav {
+    background-color: #ffffff;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+nav a {
+    margin: 0 1rem;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+main {
+    max-width: 1400px; /* Wider for a more modern feel */
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* === NEW & IMPROVED FORM STYLES === */
+.form-container {
+    max-width: 700px; /* A bit wider for a better layout */
+    margin: 3rem auto;
+    padding: 2.5rem; /* More padding */
+    background: #fff;
+    border-radius: 12px; /* Softer, more modern corners */
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+/* Base styles for all inputs, textareas, and selects */
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="number"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background-color: var(--background-light);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: var(--text-dark);
+    box-sizing: border-box;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Focus styles for a premium feel */
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-olive);
+    box-shadow: 0 0 0 3px rgba(85, 107, 47, 0.15);
+}
+
+/* Specific styling for the file input */
+.form-group input[type="file"] {
+    padding: 0;
+    border: none;
+    background: none;
+}
+.form-group input[type="file"]::file-selector-button {
+    background-color: var(--background-light);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: var(--text-dark);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.form-group input[type="file"]::file-selector-button:hover {
+    background-color: var(--border-color);
+}
+
+
+/* Button styles */
+.btn {
+    display: inline-block;
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-olive);
+    color: #fff;
+}
+.btn-primary:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+.btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
