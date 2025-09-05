@@ -76,6 +76,16 @@ const ProductDetailsPage = () => {
             </div>
             <div className="details-info-section">
                 <h1 className="product-title">{product.name}</h1>
+                product.seller && (
+    <div className="seller-info">
+        <span>Sold by: {product.seller.name}</span>
+        {product.seller.averageRating > 0 && (
+            <span className="seller-rating">
+                ⭐ {product.seller.averageRating.toFixed(1)}
+            </span>
+        )}
+    </div>
+)
                 <p className="product-category-detail">{product.category}</p>
                 <div className="product-price-detail">
                     {product.listingType === 'sell' ? `₹${product.price}` : `₹${product.pricePerDay} per day`}

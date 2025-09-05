@@ -15,7 +15,9 @@ app.use(express.json());
 // In server/server.js, add this line with your other routes
 app.use('/api/products', require('./routes/products'));
 app.use('/api/orders', require('./routes/orders')); 
-app.use('/api/upload', require('./routes/uploadRoutes')); // <-- ADD THIS LINE
+app.use('/api/upload', require('./routes/uploadRoutes')); 
+app.use('/api/users', require('./routes/userRoutes')); // <-- ADD THIS LINE```
+app.use('/api/upload', require('./routes/uploadRoutes'));
 
 
 // --- Database Connection ---
@@ -34,6 +36,7 @@ connectDB();
 // --- API Routes ---
 // When a request comes to /api/auth, it will be handled by our auth routes file
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/users', require('./routes/userRoutes'));
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

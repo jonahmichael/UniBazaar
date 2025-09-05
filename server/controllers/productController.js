@@ -72,7 +72,8 @@ exports.getAllProducts = async (req, res) => {
 // @access  Public
 exports.getProductById = async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id);
+        const product = await Product.findById(req.params.id)
+            .populate('seller', 'name averageRating');
 
         if (!product) {
             return res.status(404).json({ msg: 'Product not found' });

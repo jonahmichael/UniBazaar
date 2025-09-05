@@ -123,3 +123,24 @@
     background-color: #ccc;
     cursor: not-allowed;
 }
+
+/* Add to the end of ProductDetailsPage.css */
+.seller-info {
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: var(--secondary-olive);
+}
+
+.seller-rating {
+    background-color: var(--primary-olive);
+    color: #fff;
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
