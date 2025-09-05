@@ -59,7 +59,8 @@ const Navbar = () => {
 
                 {/* === RIGHT SECTION: ACTIONS & USER INFO === */}
                 <div className="navbar-right">
-                    <a href="/orders" className="nav-link">Returns & Orders</a>
+                    <a href="/dashboard" className="nav-link">Returns & Orders</a>
+                        
                     
                     <div className="nav-account">
                         {user ? (
