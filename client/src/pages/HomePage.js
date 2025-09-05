@@ -1,18 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ProductCard from '../components/ProductCard';
-import './HomePage.css'; // We will create this file
+import CategoriesBar from '../components/CategoriesBar'; // <-- 1. Import the new component
+import './HomePage.css';
 
 const HomePage = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    
+    // 2. Add state for the selected category
+    const [selectedCategory, setSelectedCategory] = useState('All');
 
+    // 3. Update the data fetching logic to include the category
     useEffect(() => {
         const fetchProducts = async () => {
+            setLoading(true);
             try {
-                // This is the line that makes the API call we just tested in Postman
-                const res = await axios.get('http://localhost:5001/api/products');
+                let url = 'http://localhost:5001/api/products';
+                // If the selected category is not 'All', add it to the URL as a query parameter
+                if (selectedCategory !== 'All') {
+                    url += `?category=${encodeURIComponent(selectedCategory)}`;
+                }
+                const res = await axios.get(url);
                 setProducts(res.data);
             } catch (err) {
                 setError('Could not fetch products. Please try again later.');
@@ -23,21 +33,29 @@ const HomePage = () => {
         };
 
         fetchProducts();
-    }, []); // The empty array means this effect runs only once when the component mounts
-
-    if (loading) return <p style={{ textAlign: 'center', fontSize: '1.2rem', marginTop: '3rem' }}>Loading products...</p>;
-    if (error) return <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>;
+    }, [selectedCategory]); // 4. VERY IMPORTANT: Re-run the effect whenever selectedCategory changes!
 
     return (
         <div className="homepage-container">
-            <h2>Fresh Finds on UniBazaar</h2>
+            {/* 5. Add the CategoriesBar component */}
+            <CategoriesBar 
+                selectedCategory={selectedCategory} 
+                onSelectCategory={setSelectedCategory} 
+            />
+
+            <h2>{selectedCategory === 'All' ? 'Fresh Finds' : selectedCategory} on UniBazaar</h2>
+            
             <div className="product-grid">
-                {products.length > 0 ? (
+                {loading ? (
+                    <p>Loading products...</p>
+                ) : error ? (
+                    <p style={{ color: 'red' }}>{error}</p>
+                ) : products.length > 0 ? (
                     products.map(product => (
                         <ProductCard key={product._id} product={product} />
                     ))
                 ) : (
-                    <p>No products have been listed yet. Be the first!</p>
+                    <p>No products found in this category.</p>
                 )}
             </div>
         </div>

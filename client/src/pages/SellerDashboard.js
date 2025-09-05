@@ -113,16 +113,21 @@ const SellerDashboard = () => {
                     <label>Description</label>
                     <textarea name="description" value={description} onChange={onChange} placeholder="Describe the item, its condition, and any accessories." required></textarea>
                 </div>
+                
                 <div className="form-group">
                     <label>Category</label>
                     <select name="category" value={category} onChange={onChange}>
-                        <option value="Stationery">Stationery</option>
-                        <option value="Equipment">Equipment</option>
-                        <option value="Books">Books</option>
-                        <option value="Apparel">Apparel & Suits</option>
+                        {/* Replace the old options with these new ones */}
+                        <option value="Academics & Study">Academics & Study</option>
+                        <option value="Dorm & Housing">Dorm & Housing</option>
+                        <option value="Kitchen & Food">Kitchen & Food</option>
+                        <option value="Personal Care">Personal Care</option>
+                        <option value="Clothing & Accessories">Clothing & Accessories</option>
+                        <option value="Electronics">Electronics</option>
                         <option value="Other">Other</option>
                     </select>
                 </div>
+
                 <div className="form-group">
                     <label>Listing Type</label>
                     <select name="listingType" value={listingType} onChange={onChange}>

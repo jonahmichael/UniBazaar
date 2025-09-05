@@ -30,10 +30,24 @@ exports.createProduct = async (req, res) => {
 // @desc    Get all product listings
 // @route   GET /api/products
 // @access  Public
+// Inside server/controllers/productController.js
+
+// Replace your old getAllProducts function with this new one
 exports.getAllProducts = async (req, res) => {
     try {
-        // Find all products and sort them by the newest first
-        const products = await Product.find().sort({ createdAt: -1 });
+        // 1. Create a filter object
+        const filter = {};
+
+        // 2. Check if a category query parameter exists in the URL
+        if (req.query.category) {
+            filter.category = req.query.category;
+        }
+
+        // 3. Use the filter object in the find() method
+        // If the filter object is empty, it will find all products.
+        // If it has a category, it will find only matching products.
+        const products = await Product.find(filter).sort({ createdAt: -1 });
+        
         res.json(products);
     } catch (err) {
         console.error(err.message);
