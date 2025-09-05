@@ -11,6 +11,7 @@ import RegisterPage from './pages/RegisterPage';
 import SellerDashboard from './pages/SellerDashboard';
 import ProductDetailsPage from './pages/ProductDetailsPage'; 
 import CartPage from './pages/CartPage'; // <-- 1. Import the new page
+import SearchResultsPage from './pages/SearchResultsPage';
 
 function App() {
   const { user, role } = useContext(UserContext);
@@ -33,6 +34,10 @@ function App() {
   
           <Route path="/cart" element={<CartPage />} /> {/* <-- 2. ADD THIS NEW ROUTE */}
         
+        <Route path="/product/:id" element={<ProductDetailsPage />} />
+        <Route path="/cart" element={<CartPage />} />
+
+        <Route path="/search" element={<SearchResultsPage />} />
         </Routes>
       </main>
     </Router>

@@ -33,23 +33,35 @@ exports.createProduct = async (req, res) => {
 // Inside server/controllers/productController.js
 
 // Replace your old getAllProducts function with this new one
+// Inside server/controllers/productController.js
+
+// Replace your existing getAllProducts function with this one
 exports.getAllProducts = async (req, res) => {
     try {
-        // 1. Create a filter object
         const filter = {};
 
-        // 2. Check if a category query parameter exists in the URL
+        // Handle category filtering (from Sprint 10)
         if (req.query.category) {
             filter.category = req.query.category;
         }
 
-        // 3. Use the filter object in the find() method
-        // If the filter object is empty, it will find all products.
-        // If it has a category, it will find only matching products.
+        // --- NEW SEARCH LOGIC ---
+        // Handle search query filtering
+        if (req.query.search) {
+            filter.$or = [
+                // 'i' option makes the search case-insensitive
+                { name: { $regex: req.query.search, $options: 'i' } },
+                { description: { $regex: req.query.search, $options: 'i' } }
+            ];
+        }
+        // This `$or` tells MongoDB to find documents where the search term
+        // appears in EITHER the name OR the description.
+
         const products = await Product.find(filter).sort({ createdAt: -1 });
         
         res.json(products);
-    } catch (err) {
+    } catch (err)
+ {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
