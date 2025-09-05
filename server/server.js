@@ -13,6 +13,8 @@ app.use(express.json());
 
 // In server/server.js, add this line with your other routes
 app.use('/api/products', require('./routes/products'));
+app.use('/api/orders', require('./routes/orders')); 
+
 // --- Database Connection ---
 const connectDB = async () => {
     try {
