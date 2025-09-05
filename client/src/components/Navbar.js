@@ -1,10 +1,13 @@
 import React, { useContext } from 'react';
 import './Navbar.css'; // We will create this CSS file next
 import { UserContext } from '../context/UserContext';
+import { CartContext } from '../context/CartContext'; // <-- 1. Import the CartContext
 
 const Navbar = () => {
     // We will use these later to show/hide elements and make the toggle work
     const { user, role, switchRole } = useContext(UserContext);
+    const { cartItems } = useContext(CartContext); // <-- 2. Get the cartItems
+    const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);
 
     // Placeholder function for logging out
     const handleLogout = () => {
@@ -39,7 +42,10 @@ const Navbar = () => {
                         )}
                     </div>
                     
-                    <a href="/cart" className="nav-link">Cart</a>
+                <a href="/cart" className="nav-link nav-cart">
+                    Cart
+                    {totalItemsInCart > 0 && <span className="cart-badge">{totalItemsInCart}</span>}
+                </a>
 
                     {/* The Buyer/Seller toggle switch, only shown if logged in */}
                     {user && (

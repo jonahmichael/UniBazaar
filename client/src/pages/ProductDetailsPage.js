@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import DatePicker from 'react-datepicker'; // <-- Import DatePicker
 import 'react-datepicker/dist/react-datepicker.css'; // <-- Import its CSS
 import './ProductDetailsPage.css';
+import { CartContext } from '../context/CartContext'; // <-- 1. Import the CartContext
+
 
 const ProductDetailsPage = () => {
     const { id } = useParams();
@@ -11,7 +13,7 @@ const ProductDetailsPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-
+    const { addToCart } = useContext(CartContext);
     // State for borrowing
     const [returnDate, setReturnDate] = useState(new Date());
     const [borrowDays, setBorrowDays] = useState(1);
@@ -97,14 +99,21 @@ const ProductDetailsPage = () => {
                 <p className="product-description">{product.description}</p>
                 
                 <div className="action-buttons">
-                    {product.listingType === 'sell' ? (
-                        <button className="btn btn-primary">Add to Cart</button>
-                    ) : (
-                        <button className="btn btn-primary" onClick={handleBorrowRequest} disabled={!product.isAvailable}>
-                            {product.isAvailable ? 'Request to Borrow' : 'Unavailable'}
-                        </button>
-                    )}
-                </div>
+            {product.listingType === 'sell' ? (
+                //  4. Call addToCart when the button is clicked! Add a success message.
+                <button className="btn btn-primary" onClick={() => {
+                    addToCart(product);
+                    setSuccess(`${product.name} has been added to your cart!`);
+                }}>
+                    Add to Cart
+                </button>
+            ) : (
+                <button className="btn btn-primary" onClick={handleBorrowRequest} disabled={!product.isAvailable}>
+                    {product.isAvailable ? 'Request to Borrow' : 'Unavailable'}
+                </button>
+            )}
+            <button className="btn btn-secondary">Add to Wishlist</button>
+        </div>
                 {success && <p style={{ color: 'green', marginTop: '1rem' }}>{success}</p>}
                 {error && <p style={{ color: 'red', marginTop: '1rem' }}>{error}</p>}
             </div>

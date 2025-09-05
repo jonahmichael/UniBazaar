@@ -5,13 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { UserProvider } from './context/UserContext';
  // Import the provider
+import { CartProvider } from './context/CartContext'; // <-- 1. Import CartProvider
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <UserProvider>
-      <App />
+      <CartProvider> 
+        <App />
+      </CartProvider>
     </UserProvider>
   </React.StrictMode>
 );

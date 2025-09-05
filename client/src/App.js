@@ -9,7 +9,8 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import SellerDashboard from './pages/SellerDashboard';
-import ProductDetailsPage from './pages/ProductDetailsPage'; // <-- Import the new page
+import ProductDetailsPage from './pages/ProductDetailsPage'; 
+import CartPage from './pages/CartPage'; // <-- 1. Import the new page
 
 function App() {
   const { user, role } = useContext(UserContext);
@@ -27,6 +28,11 @@ function App() {
           
           {/* This is the new dynamic route for product details */}
           <Route path="/product/:id" element={<ProductDetailsPage />} /> {/* <-- ADD THIS LINE */}
+
+          <Route path="/product/:id" element={<ProductDetailsPage />} />
+  
+          <Route path="/cart" element={<CartPage />} /> {/* <-- 2. ADD THIS NEW ROUTE */}
+        
         </Routes>
       </main>
     </Router>

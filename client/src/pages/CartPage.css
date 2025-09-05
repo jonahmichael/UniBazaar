@@ -1,0 +1,122 @@
+.cart-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.cart-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.cart-empty {
+    text-align: center;
+    padding: 4rem 0;
+}
+
+.cart-empty p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.cart-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.cart-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.cart-item {
+    display: flex;
+    gap: 1.5rem;
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+}
+
+.cart-item-image {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+}
+
+.cart-item-details {
+    flex-grow: 1;
+}
+
+.cart-item-name {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.cart-item-category, .cart-item-quantity {
+    margin: 0.25rem 0;
+    color: var(--secondary-olive);
+}
+
+.cart-item-price {
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.remove-item-btn {
+    background: none;
+    border: none;
+    color: var(--secondary-olive);
+    font-size: 0.9rem;
+    cursor: pointer;
+    align-self: flex-start;
+}
+.remove-item-btn:hover {
+    color: red;
+    text-decoration: underline;
+}
+
+.cart-summary {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    position: sticky;
+    top: 120px; /* Adjust based on your navbar height */
+}
+
+.summary-title {
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+}
+
+.summary-line, .summary-total {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.summary-total {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.checkout-btn {
+    width: 100%;
+    margin-top: 1rem;
+}
