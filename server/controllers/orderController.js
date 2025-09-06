@@ -7,6 +7,7 @@ exports.createOrder = async (req, res) => {
     const { productId, orderType, tentativeReturnDate } = req.body;
     try {
         const product = await Product.findById(productId);
+
         if (!product) {
             return res.status(404).json({ msg: 'Product not found' });
         }

@@ -30,20 +30,27 @@ exports.createProduct = async (req, res) => {
 // @desc    Get all products (with filtering for search and category)
 exports.getAllProducts = async (req, res) => {
     try {
+        // Destructure the expected inputs from the user's query
+        const { category, search } = req.query;
+        
+        // Create a new, clean filter object
         const filter = {};
 
-        if (req.query.category) {
-            filter.category = req.query.category;
+        // Only add properties to the filter if they were actually provided
+        if (category) {
+            filter.category = category;
         }
 
-        if (req.query.search) {
+        if (search) {
             filter.$or = [
-                { name: { $regex: req.query.search, $options: 'i' } },
-                { description: { $regex: req.query.search, $options: 'i' } }
+                { name: { $regex: search, $options: 'i' } },
+                { description: { $regex: search, $options: 'i' } }
             ];
         }
 
+        // Use the clean, constructed filter object for the query
         const products = await Product.find(filter).sort({ createdAt: -1 });
+        
         res.json(products);
     } catch (err) {
         console.error(err.message);

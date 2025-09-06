@@ -8,8 +8,8 @@ exports.register = async (req, res) => {
 
     try {
         // 1. Check if user already exists
-        let user = await User.findOne({ email });
-        if (user) {
+        const existingUser = await User.findOne({ email: email });
+        if (existingUser) { // also rename 'user' to 'existingUser' to avoid conflict
             return res.status(400).json({ msg: 'User already exists' });
         }
 
@@ -42,7 +42,7 @@ exports.login = async (req, res) => {
 
     try {
         // 1. Check if user exists
-        let user = await User.findOne({ email });
+        const user = await User.findOne({ email: email });
         if (!user) {
             return res.status(400).json({ msg: 'Invalid Credentials' });
         }
