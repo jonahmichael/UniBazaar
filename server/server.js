@@ -3,8 +3,26 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config(); // This loads the .env file
 const cloudinaryConnect = require('./config/cloudinaryConfig'); // <-- 1. Import
+const rateLimit = require('express-rate-limit');
+const mongoSanitize = require('express-mongo-sanitize');
+
 const app = express();
 cloudinaryConnect();
+
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per windowMs
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: 'Too many requests from this IP, please try again after 15 minutes',
+});
+
+// Apply the rate limiting middleware to all requests
+app.use(limiter);
+
+// b) Data Sanitization against NoSQL Query Injection
+// This will remove any keys in req.body, req.query, or req.params that start with '$' or '.'.
+app.use(mongoSanitize());
 
 // --- Middleware ---
 // Enable Cross-Origin Resource Sharing
