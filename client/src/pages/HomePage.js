@@ -1,24 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { motion } from 'framer-motion'; // Framer Motion is correctly imported
 import ProductCard from '../components/ProductCard';
-import CategoriesBar from '../components/CategoriesBar'; // <-- 1. Import the new component
+import CategoriesBar from '../components/CategoriesBar';
 import './HomePage.css';
 
+// The animation variants for the container are correctly defined here.
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1 // This creates the nice delay effect between cards
+        }
+    }
+};
+
 const HomePage = () => {
+    // All your state management for products and categories is correct.
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    
-    // 2. Add state for the selected category
     const [selectedCategory, setSelectedCategory] = useState('All');
 
-    // 3. Update the data fetching logic to include the category
+    // Your data fetching logic is perfect. It correctly refetches when the category changes.
     useEffect(() => {
         const fetchProducts = async () => {
             setLoading(true);
             try {
                 let url = 'http://localhost:5001/api/products';
-                // If the selected category is not 'All', add it to the URL as a query parameter
                 if (selectedCategory !== 'All') {
                     url += `?category=${encodeURIComponent(selectedCategory)}`;
                 }
@@ -33,11 +43,10 @@ const HomePage = () => {
         };
 
         fetchProducts();
-    }, [selectedCategory]); // 4. VERY IMPORTANT: Re-run the effect whenever selectedCategory changes!
+    }, [selectedCategory]);
 
     return (
         <div className="homepage-container">
-            {/* 5. Add the CategoriesBar component */}
             <CategoriesBar 
                 selectedCategory={selectedCategory} 
                 onSelectCategory={setSelectedCategory} 
@@ -45,7 +54,16 @@ const HomePage = () => {
 
             <h2>{selectedCategory === 'All' ? 'Fresh Finds' : selectedCategory} on UniBazaar</h2>
             
-            <div className="product-grid">
+            {/* --- THIS IS THE MAIN CORRECTION --- */}
+            {/* 1. The div is now a `motion.div`. */}
+            {/* 2. It's connected to our variants and set to animate on load. */}
+            <motion.div 
+                className="product-grid"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+            >
+                {/* Your conditional rendering logic is perfect and goes inside the motion.div */}
                 {loading ? (
                     <p>Loading products...</p>
                 ) : error ? (
@@ -57,7 +75,7 @@ const HomePage = () => {
                 ) : (
                     <p>No products found in this category.</p>
                 )}
-            </div>
+            </motion.div>
         </div>
     );
 };
